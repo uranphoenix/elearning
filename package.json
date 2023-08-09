@@ -11,6 +11,16 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11"
+    "express-handlebars": "^7.1.2",
+    "bcryptjs": "~2.4.3",
+    "passport": "~0.6.0",
+    "passport-http": "~0.3.0",
+    "passport-local": "~1.0.0",
+    "mongodb": "~5.7.0",
+    "mongoose": "~7.4.2",
+    "express-session": "~1.17.3",
+    "connect-flash": "~0.1.1",
+    "express-messages": "~1.0.1",
+    "express-validator": "~7.0.1"
   }
 }
