@@ -1,9 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+const Class = require('../model/class');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  Class.getClasses(3).then((classes) => {
+    res.render('index', { classes: classes });
+  });
+
 });
 
 module.exports = router;
