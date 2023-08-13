@@ -45,7 +45,6 @@ body{
 margin:0;
 padding:0 0 0 0;
 color:#000;
-background:#efefef url(css/img/gray_jean.png);
 font:normal 0.9em/150% 'Arimo', arial, verdana, sans-serif;
 text-shadow: 0 0 1px transparent; /* google font pixelation fix */
 }
@@ -112,7 +111,7 @@ z-index:1000;
 		.navbar li{
 		margin:0;
 		padding:0;
-		list-style-type:0;
+		list-style-type: none;
 		display:inline-block;
 		}
 
@@ -152,4 +151,9 @@ padding:30px 0;
 border:5px solid #ddd;
 margin:30px 0;
 display:block;
+}
+
+form label {
+	display: inline-block;
+	width: 180px;
 }
