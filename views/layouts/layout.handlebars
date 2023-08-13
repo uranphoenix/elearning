@@ -3,9 +3,9 @@
 <head>
 <title>Elearn</title>
 <link rel="stylesheet" type="text/css" href="/stylesheets/kickstart.css" media="all" />
-<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" media="all" />                 
+<link rel="stylesheet" type="text/css" href="/stylesheets/style.css" media="all" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/javascripts/kickstart.js"></script>                       
+<script type="text/javascript" src="/public/javascripts/kickstart.js"></script>
 </head>
 <body>
 
@@ -18,55 +18,37 @@
 <div class="grid">
 <div class="col_12">
 	<div class="col_9">
-	<h3>Welcome To Elearn</h3>
-	<p>
-	Lorem ipsum dolor sit amet, consectetuer <em>adipiscing elit</em>, sed diam nonummy nibh euismod 
-	tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis 
-	nostrud exerci tation <strong>ullamcorper suscipit lobortis</strong> nisl ut aliquip ex ea commodo consequat. 
-	Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat</p>
+        {{#if success_msg}}
+            <div class="notice success"><i class="icon-remove-sign icon-large"></i> {{success_msg}}
+                <a href="#close" class="icon-remove"></a>
+            </div>
+        {{/if}}
+
+        {{#if error_msg}}
+            <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{error_msg}}
+                <a href="#close" class="icon-remove"></a>
+            </div>
+        {{/if}}
+
+        {{#if error}}
+            <div class="notice error"><i class="icon-remove-sign icon-large"></i> {{error}}
+                <a href="#close" class="icon-remove"></a>
+            </div>
+        {{/if}}
+
+	    {{{body}}}
 	</div>
 	
 	<div class="col_3">
-	<h5>Student & Instructor Login</h5>
-	<form>
-	<label>Username: </label>
-	<input type="text" name="username">
-	<label>Password: </label>
-	<input type="password" name="password">
-	<input class="button" type="submit" value="submit">
-	</form>
-	
-	
+	    {{>login}}
 	</div>
 	
-	<hr />
-	
-	<div class="col_4">
-	<h4>HTML 101</h4>
-	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
-	magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
-	<a class="button" href="#">View Class</a>
-	</div>
-	
-	<div class="col_4">
-	<h4>Intro To PHP</h4>
-	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
-	magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
-	<a class="button" href="#">View Class</a>
-	</div>
-	
-	<div class="col_4">
-	<h4>Learn Node.js</h4>
-	<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
-	magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis</p>
-	<a class="button" href="#">View Class</a>
-	</div>
+	<hr>
+	    {{>classes}}
 	
 </div>
 
-</div><!-- END GRID -->
-
-<!-- ===================================== START FOOTER ===================================== -->
+</div>
 <div class="clear"></div>
 
 

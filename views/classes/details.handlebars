@@ -1,0 +1,24 @@
+<h2>{{cl.title}}</h2>
+<p>
+    <strong>Instructor: </strong> {{cl.author}}
+</p>
+<p>
+    {{cl.description}}
+</p>
+
+<ul class="alt">
+    {{#each cl.lessons}}
+        <li>{{lesson_title}}</li>
+    {{/each}}
+</ul>
+
+{{#if user}}
+    <form id="classRegForm" method="post" action="/studetns/classes/register">
+        <input type="hidden" name="student_id" value="{{user._id}}">
+        <input type="hidden" name="class_id" value="{{cl._id}}">
+        <input type="hidden" name="class_title" value="{{cl.title}}">
+        <input type="submit" class="button" value="Register for this class">
+    </form>
+{{else}}
+    <p>You must be logged in to register for the class</p>
+{{/if}}
