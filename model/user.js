@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const asic = require('async');
 
 const User = module.exports = mongoose.model(
     'User',
@@ -23,30 +22,24 @@ const User = module.exports = mongoose.model(
 
 //get user by unique id
 module.exports.getUserById = async function(id) {
-    User.findById(id)
-        .then((user) => {
-            return user;
-        })
-        .catch ((e) => {
-            console.log(`Error happened in user model: ${e.msg}`);
-            throw e;
-        });
+    try {
+        return User.findById(id);
+    } catch(e) {
+        console.log(`Error happened: ${e.msg}`);
+        throw e;
+    }
 }
 
-//get user by username
 module.exports.getUserByUsername = async function(username) {
-    const query = {username: username};
-    User.findOne(query)
-        .then((user) => {
-            return user
-        })
-        .catch((e) => {
-            console.log(`Error happened in user model: ${e.msg}`);
-            throw e;
-        })
+    try {
+        return await User.findOne({username: username});
+    } catch(e) {
+        console.log(e.msg);
+        throw e;
+    }
 }
 
-module.exports.comparePasswords = function(candidatePassword, hash, callback) {
+module.exports.comparePassword = function(candidatePassword, hash, callback) {
     bcrypt.compare(candidatePassword, hash, (error, isMatch) => {
         callback(error, isMatch)
     });
