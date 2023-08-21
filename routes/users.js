@@ -9,12 +9,28 @@ const Student = require('../model/student');
 const Instructor = require('../model/instructor');
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
   User.getUserById(id).then((user) => done(null, user)).catch((e) => done(e));
 });
+
+passport.use('local', new LocalStrategy({}, async (username, password, done) => {
+    const user = await User.getUserByUsername(username);
+    if(!user) {
+      return done(null, false, {message: 'Unknown user'})
+    }
+
+    User.comparePassword(password, user.password, (err, isMatch) => {
+      if(err) return done(err);
+      if(isMatch) {
+        return done(null, user);
+      } else {
+        return done(null, false, {message: 'Invalid password'});
+      }
+    });
+}))
 
 router.get('/register', function(req, res, next) {
   console.log('get');
@@ -97,28 +113,18 @@ router.post('/register', async function(req, res, next) {
   }
 });
 
-router.post('/login', passport.authenticate({failureRedirect: '/', failureFlash: true}), function (req, res, next) {
+router.post('/login', passport.authenticate('local',{failureRedirect: '/', failureFlash: true}), function (req, res, next) {
   req.flash('success_msg', "You are now logged in");
   const usertype = req.user.type;
-  res.redirect('/' + usertype + 's/classes');
+  res.redirect('/');
 });
 
-passport.use('local', new LocalStrategy({}, (username, password, done) => {
-  User.getUserByUsername(username).then((user) => {
-    if(!user) {
-      return done(null, false, {message: 'Unknown user'})
-    }
-
-    User.comparePasswords(password, user.password, (err, isMatch) => {
-      if(err) return done(err);
-      if(isMatch) {
-        return done(null, user);
-      } else {
-        console.log("Invalid password");
-        return done(null, false, {message: 'Invalid password'});
-      }
-    });
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if(err) { return next(err) }
+    req.flash('success', "You have logged out");
+    res.redirect('/');
   });
-}));
+});
 
 module.exports = router;
