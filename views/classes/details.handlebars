@@ -13,7 +13,7 @@
 </ul>
 
 {{#if user}}
-    <form id="classRegForm" method="post" action="/studetns/classes/register">
+    <form id="classRegForm" method="post" action="/{{type}}s/classes/register">
         <input type="hidden" name="student_id" value="{{user._id}}">
         <input type="hidden" name="class_id" value="{{cl._id}}">
         <input type="hidden" name="class_title" value="{{cl.title}}">
