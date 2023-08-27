@@ -21,6 +21,8 @@ const db = connection;
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const classesRouter = require('./routes/classes');
+const studentsRouter = require('./routes/students');
+const instructorsRouter = require('./routes/instructors');
 
 const app = express();
 
@@ -41,6 +43,8 @@ app.use(session({
   resave: true
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(connectFlash());
 
 app.use(function (req, res, next) {
@@ -48,14 +52,23 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   next();
-})
+});
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.get('*', (req, res, next) => {
+  res.locals.user = req.user || null;
+  if(req.user) {
+    res.locals.type = req.user.type;
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/classes', classesRouter);
+app.use('/students', studentsRouter);
+app.use('/instructors', instructorsRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
