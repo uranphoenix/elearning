@@ -34,3 +34,18 @@ module.exports.getClassById = async function(id) {
         throw e;
     }
 }
+
+module.exports.addLesson = async function(info) {
+    const query = {_id: info.class_id};
+    const update = {$push: {"lessons": {
+        lesson_number: info.lesson_number,
+        lesson_title: info.lesson_title,
+        lesson_body: info.lesson_body
+    }}};
+
+    try {
+        return await Class.findByIdAndUpdate(query, update, {safe: true, upsert: true});
+    } catch (e) {
+        console.log(`Error happened in class model: ${e.msg}`);
+    }
+}

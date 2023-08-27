@@ -24,3 +24,12 @@ const Student = module.exports = mongoose.model('Student', new mongoose.Schema({
         class_title: {type:String}
     }]
 }));
+
+module.exports.getByUsername = async function(username) {
+    try {
+        return await Student.findOne({username: username}).lean();
+    } catch(e) {
+        console.log(e.msg);
+        throw e;
+    }
+}

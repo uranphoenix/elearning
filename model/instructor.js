@@ -24,3 +24,24 @@ const Instructor = module.exports = mongoose.model('instructor', mongoose.Schema
         class_title: {type:String}
     }]
 }));
+
+module.exports.getByUsername = async function(username) {
+    try {
+        return await Instructor.findOne({username: username}).lean();
+    } catch(e) {
+        console.log(e.msg);
+        throw e;
+    }
+}
+
+module.exports.register = async function(info) {
+    const query = {username: info.instructor_username};
+    const update = {$push: {"classes": {class_id: info.class_id, class_title: info.class_title}}};
+    try {
+        return await Instructor.findOneAndUpdate(query, update, {safe: true, upsert: true});
+    } catch(e) {
+        console.log(e.msg);
+        throw e;
+    }
+
+}
