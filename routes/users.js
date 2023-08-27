@@ -33,7 +33,6 @@ passport.use('local', new LocalStrategy({}, async (username, password, done) => 
 }))
 
 router.get('/register', function(req, res, next) {
-  console.log('get');
   res.render('users/register');
 });
 
@@ -109,14 +108,15 @@ router.post('/register', async function(req, res, next) {
     }
 
     req.flash('success_msg', "Successfully registered");
-    res.redirect('/');
+    res.redirect('/' + type + 's/classes');
   }
 });
 
+// noinspection JSCheckFunctionSignatures
 router.post('/login', passport.authenticate('local',{failureRedirect: '/', failureFlash: true}), function (req, res, next) {
   req.flash('success_msg', "You are now logged in");
-  const usertype = req.user.type;
-  res.redirect('/');
+  const type = req.user.type;
+  res.redirect('/' + type + 's/classes');
 });
 
 router.get('/logout', (req, res, next) => {
