@@ -90,7 +90,6 @@ router.post('/register', async function(req, res, next) {
       console.log('Student created');
     } else {
       console.log('Registering new instructor');
-      console.log('Registering new student');
       const newInstructor = new Instructor({
         first_name: first_name,
         last_name: last_name,
@@ -106,9 +105,11 @@ router.post('/register', async function(req, res, next) {
       await User.saveInstructor(newUser, newInstructor);
       console.log('Instructor created');
     }
-
-    req.flash('success_msg', "Successfully registered");
-    res.redirect('/' + type + 's/classes');
+    req.login(newUser, function(err) {
+      if (err) { return next(err); }
+      req.flash('success_msg', "Successfully registered");
+      res.redirect('/' + type + 's/classes');
+    });
   }
 });
 
