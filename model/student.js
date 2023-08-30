@@ -33,3 +33,14 @@ module.exports.getByUsername = async function(username) {
         throw e;
     }
 }
+
+module.exports.register = async function(info) {
+    const query = {username: info.student_username};
+    const update = {$push: {"classes": {class_id: info.class_id, class_title: info.class_title}}};
+    try {
+        return await Student.findOneAndUpdate(query, update, {safe: true, upsert: true});
+    } catch(e) {
+        console.log(e.msg);
+        throw e;
+    }
+}

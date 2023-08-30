@@ -43,5 +43,4 @@ module.exports.register = async function(info) {
         console.log(e.msg);
         throw e;
     }
-
 }
